@@ -52,7 +52,7 @@ const cerrarSesion = () => {
 }
 
 const contenidoChat = (user) => {
-    contenidoProtegido.innerHTML = `<p class="text-center lead mt-5">bienvenido ${user.email}</p>`
+
     formulario.addEventListener('submit', (e) => {
         e.preventDefault()
         if(!inputChat.value.trim()) {
@@ -66,5 +66,27 @@ const contenidoChat = (user) => {
         })
         .then(res => {console.log('mensaje enviado')})
         .catch(e => console.log(e))
+        inputChat.value = ''
     })
+
+    firebase.firestore().collection('chat').orderBy('fecha')
+        .onSnapshot(query => {
+            contenidoProtegido.innerHTML = ``
+            query.forEach(doc => {
+                if(doc.data().uid === user.uid) {
+                    contenidoProtegido.innerHTML += `
+                    <div class="d-flex justify-content-end">
+                        <span class="badge badge-pill badge-primary">${doc.data().texto}</span>
+                    </div>
+                    `
+                } else {
+                    contenidoProtegido.innerHTML += `
+                    <div class="d-flex justify-content-start">
+                        <span class="badge badge-pill badge-secondary">${doc.data().texto}</span>
+                    </div>
+                    `
+                }
+                contenidoProtegido.scrollTop = contenidoProtegido.scrollHeight
+            })
+        })
 }
