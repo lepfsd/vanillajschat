@@ -23,15 +23,30 @@
 
   </head>
   <body>
-    <div class="container">
+    <div class="container-md">
+      
         <nav class="navbar navbar-dark bg-dark">
             <span class="navbar-brand" id="nombreUsuario">chat</span>
             <div id="botones"></div>
         </nav>
 
-         <main id="contenidoProtegido">
-              
-         </main>
+        <div class="row">
+          <div class="col-md-8"> 
+            <main id="contenidoProtegido"></main>
+          </div>
+        </div>
+         
+         <div class="row">
+          <div class="col-md-8"> 
+            <form class="input-group py-4 fixed-bottom container" id="formulario">
+              <input type="text" class="form-control" placeholder="Enviar Mensaje" id="inputChat">
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Enviar</button>
+              </div>
+           </form>
+          </div>
+        </div>
+         
     </div>
 
     <script src="firebase.js"></script>
