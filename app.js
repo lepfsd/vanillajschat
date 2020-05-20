@@ -1,14 +1,18 @@
 const botones = document.querySelector('#botones')
 const nombreUsuario = document.querySelector('#nombreUsuario')
+const contenidoProtegido = document.querySelector('#contenidoProtegido')
 
 firebase.auth().onAuthStateChanged( user => {
     if(user) {
-        console.log(user);
+        
         botones.innerHTML = /*html*/`
             <button class="btn btn-outline-danger" id="btnCerrarSesion">logout</button>
         `
         nombreUsuario.innerHTML = user.displayName
         cerrarSesion()
+        contenidoProtegido.innerHTML = `
+            <p class="text-center lead mt-5"> bienvenido ${user.email} </p> 
+        `
     } else {
         console.log("no existe user");
         botones.innerHTML = /*html*/`
@@ -17,6 +21,9 @@ firebase.auth().onAuthStateChanged( user => {
 
         iniciarSesion()
         nombreUsuario.innerHTML = 'Chat';
+        contenidoProtegido.innerHTML = `
+            <p class="text-center lead mt-5"> debes iniciar sesion </p> 
+        `
     }
 })
 
